@@ -9,7 +9,7 @@ import java.util.HashMap;
 
 import static model.MovieType.*;
 
-public final class Main {
+public class Main {
 
     public static void main(String[] args) {
         MovieService movieService = MovieService.getInstance();

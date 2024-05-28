@@ -16,6 +16,6 @@ Note: the Git history must be included.
 ## To run the test:
 
 ```
-javac src/*.java
+javac src/*.java src/model/*.java src/service/*.java src/utils/*.java
 java -cp src Main
 ```
