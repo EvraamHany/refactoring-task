@@ -2,6 +2,7 @@ import model.Customer;
 import model.Movie;
 import model.MovieRental;
 import service.MovieRentalService;
+import service.MovieService;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -11,7 +12,8 @@ import static model.MovieType.*;
 public final class Main {
 
     public static void main(String[] args) {
-        MovieRentalService movieRentalService = new MovieRentalService();
+        MovieService movieService = MovieService.getInstance();
+        MovieRentalService movieRentalService=new MovieRentalService();
 
         //given
         HashMap<String, Movie> movies = new HashMap<>();
@@ -19,7 +21,7 @@ public final class Main {
         movies.put("F002", new Movie("Matrix", REGULAR.getValue()));
         movies.put("F003", new Movie("Cars", CHILDRENS.getValue()));
         movies.put("F004", new Movie("Fast & Furious X", NEW.getValue()));
-        movieRentalService.setMovies(movies);
+        movieService.addMovies(movies);
 
         //When
         String result = movieRentalService.getRentalStatement(new Customer("C. U. Stomer", Arrays.asList(new MovieRental("F001", 3), new MovieRental("F002", 1))));
