@@ -20,16 +20,39 @@ public class MovieRentalService {
     public String getRentalStatement(Customer customer) {
         StringBuilder result = new StringBuilder("Rental Record for " + customer.getName() + "\n");
 
-        double totalAmount = customer.getRentals().stream()
-                .mapToDouble(this::calculateRentalAmount)
+        double totalAmount = customer.getRentals()
+                .stream()
+                .mapToDouble(movieRental -> {
+                    try {
+                        return calculateRentalAmount(movieRental);
+                    } catch (Exception e) {
+                        throw new RuntimeException("error calculating total amount");
+                    }
+                })
                 .sum();
 
-        int frequentEnterPoints = customer.getRentals().stream()
-                .mapToInt(movieRental -> isBonusApplicable(movieRental) ? 2 : 1)
+        int frequentEnterPoints = customer.getRentals()
+                .stream()
+                .mapToInt(movieRental -> {
+                    try {
+                        return isBonusApplicable(movieRental) ? 2 : 1;
+                    } catch (Exception e) {
+                        throw new RuntimeException("error calculating frequent Enter Points");
+                    }
+                })
                 .sum();
 
-        String rentalDetails = customer.getRentals().stream()
-                .map(movieRental -> "\t" + movieService.getMovies().get(movieRental.getMovieId()).getTitle() + "\t" + calculateRentalAmount(movieRental) + "\n")
+        String rentalDetails = customer.getRentals()
+                .stream()
+                .map(movieRental -> {
+                    try {
+                        String title = movieService.getMovies().get(movieRental.getMovieId()).getTitle();
+                        double amount = calculateRentalAmount(movieRental);
+                        return "\t" + title + "\t" + amount + "\n";
+                    } catch (Exception e) {
+                        throw new RuntimeException("error creating rental details");
+                    }
+                })
                 .collect(Collectors.joining());
 
         result.append(rentalDetails);
