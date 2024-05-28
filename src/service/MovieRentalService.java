@@ -2,9 +2,7 @@ package service;
 
 import model.Customer;
 import model.MovieRental;
-
 import java.util.Objects;
-
 import static model.MovieType.*;
 import static utils.Constants.*;
 
