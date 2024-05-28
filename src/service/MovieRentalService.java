@@ -1,9 +1,8 @@
 package service;
 
 import model.Customer;
-import model.Movie;
 import model.MovieRental;
-import java.util.HashMap;
+
 import java.util.Objects;
 
 import static model.MovieType.*;
