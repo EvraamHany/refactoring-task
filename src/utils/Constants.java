@@ -10,4 +10,6 @@ public interface Constants {
     double EXTRA_AMOUNT_PER_EACH_EXCTRA_CHILDEREN_MOVIE_DAY = 1.5;
 
     double AMOUNT_PER_DAY_FOR_NEW_MOVIE = 3;
+    double MAX_NEW_RENTAL_PERIOD = 2;
+
 }

@@ -57,23 +57,22 @@ public class MovieRentalService {
                     MAX_CHILDEREN_RENTAL_PERIOD,
                     EXTRA_AMOUNT_PER_EACH_EXCTRA_CHILDEREN_MOVIE_DAY);
         }
-
         return thisAmount;
     }
 
     private static double getAmountBasedOnInitialMaxAndExtraCharge(MovieRental movieRental,
-                                                                   double initialMovieTypeAmount,
-                                                                   double maxMovieTypeRentalPeriod,
+                                                                   double initialMovieAmount,
+                                                                   double maxMovieRentalPeriod,
                                                                    double extraAmountPerExtraDay) {
         double thisAmount;
-        thisAmount = initialMovieTypeAmount;
-        if (movieRental.getDays() > maxMovieTypeRentalPeriod) {
-            thisAmount += (movieRental.getDays() - maxMovieTypeRentalPeriod) * extraAmountPerExtraDay;
+        thisAmount = initialMovieAmount;
+        if (movieRental.getDays() > maxMovieRentalPeriod) {
+            thisAmount += (movieRental.getDays() - maxMovieRentalPeriod) * extraAmountPerExtraDay;
         }
         return thisAmount;
     }
 
     private boolean isBonusApplicable(MovieRental movieRental) {
-        return movieService.getMovies().get(movieRental.getMovieId()).getCode().equals(NEW.getValue()) && movieRental.getDays() > 2;
+        return movieService.getMovies().get(movieRental.getMovieId()).getCode().equals(NEW.getValue()) && movieRental.getDays() > MAX_NEW_RENTAL_PERIOD;
     }
 }

@@ -13,7 +13,7 @@ public final class Main {
 
     public static void main(String[] args) {
         MovieService movieService = MovieService.getInstance();
-        MovieRentalService movieRentalService=new MovieRentalService();
+        MovieRentalService movieRentalService = new MovieRentalService();
 
         //given
         HashMap<String, Movie> movies = new HashMap<>();
