@@ -11,8 +11,7 @@ import static model.MovieType.*;
 
 public class MovieRentalService {
 
-  private  HashMap<String, Movie> movies;
-  private static final int INETIAL_REGULAR_MOVIE_AMOUT = 2;
+  private static final int INITIAL_REGULAR_MOVIE_ABOUT = 2;
   private static final int MAX_REGULAR_RENTAL_PERIOD = 2;
   private static final double EXTRA_AMOUNT_PER_EACH_EXCTRA_REGULAR_MOVIE_DAY = 1.5;
 
@@ -22,10 +21,8 @@ public class MovieRentalService {
 
   private static final double AMOUNT_PER_DAY_FOR_NEW_MOVIE = 3;
 
+  MovieService movieService = MovieService.getInstance();
 
-  public void setMovies(HashMap<String, Movie> movies) {
-    this.movies = movies;
-  }
 
   public String getRentalStatement(Customer customer) {
     double totalAmount = 0;
@@ -33,14 +30,14 @@ public class MovieRentalService {
     StringBuilder result = new StringBuilder("Rental Record for " + customer.getName() + "\n");
 
     for (MovieRental movieRental : customer.getRentals()) {
-      double thisAmount = getRentalAmount(movieRental);
+      double thisAmount = calculateRentalAmount(movieRental);
       frequentEnterPoints++;
 
       if (isBonusApplicable(movieRental)) {
         frequentEnterPoints++;
       }
 
-      result.append("\t").append(movies.get(movieRental.getMovieId()).getTitle()).append("\t").append(thisAmount).append("\n");
+      result.append("\t").append(movieService.getMovies().get(movieRental.getMovieId()).getTitle()).append("\t").append(thisAmount).append("\n");
       totalAmount += thisAmount;
     }
 
@@ -50,12 +47,12 @@ public class MovieRentalService {
     return result.toString();
   }
 
-  private double getRentalAmount(MovieRental movieRental) {
+  private double calculateRentalAmount(MovieRental movieRental) {
     double thisAmount = 0;
-    String code = movies.get(movieRental.getMovieId()).getCode();
+    String code = movieService.getMovies().get(movieRental.getMovieId()).getCode();
 
       if (Objects.equals(code, REGULAR.getValue())) {
-        thisAmount = INETIAL_REGULAR_MOVIE_AMOUT;
+        thisAmount = INITIAL_REGULAR_MOVIE_ABOUT;
         if (movieRental.getDays() > MAX_REGULAR_RENTAL_PERIOD) {
           thisAmount += (movieRental.getDays() - MAX_REGULAR_RENTAL_PERIOD) * EXTRA_AMOUNT_PER_EACH_EXCTRA_REGULAR_MOVIE_DAY;
         }
@@ -76,6 +73,6 @@ public class MovieRentalService {
   }
 
   private boolean isBonusApplicable(MovieRental movieRental) {
-    return movies.get(movieRental.getMovieId()).getCode().equals(NEW.getValue()) && movieRental.getDays() > 2;
+    return movieService.getMovies().get(movieRental.getMovieId()).getCode().equals(NEW.getValue()) && movieRental.getDays() > 2;
   }
 }
