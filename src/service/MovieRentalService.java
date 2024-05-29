@@ -14,7 +14,7 @@ import static utils.Constants.*;
 public class MovieRentalService {
 
 
-    MovieService movieService = MovieService.getInstance();
+    private MovieService movieService = MovieService.getInstance();
 
 
     public String getRentalStatement(Customer customer) {
