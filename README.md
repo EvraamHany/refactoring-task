@@ -4,6 +4,7 @@
   - used enum class for movies type instead of string to make it more generalized over the project 
   - rename RentalInfo class to be a service one to be like a service layer as it contains a business logic
   - decoupling business logic inside rentalInfo "statement" by separating methods
+  - use string builder instead of string to enhance performance
   - change "statement" method's name to be a verb to follow the naming convention of method definition
   - create a stand-alone MovieService to be responsible for any movies change (single responsibility of each class)
   - make MovieService class a singleton class by applying synchronized code block to looks like a bean
